@@ -2,7 +2,7 @@ import { View, Text, StyleSheet} from "react-native"
 
 export default function Login(){
     return(
-        <View>
+        <View style={styles.container}>
             <Text>
                 Página Login
             </Text>
@@ -10,5 +10,9 @@ export default function Login(){
     )
 }
 const styles = StyleSheet.create({
-
+    container:{
+        flex: 1,
+        justifyContent: "center",
+        alignItems: "center",
+    }
 })
