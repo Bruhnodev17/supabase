@@ -1,0 +1,2 @@
+export const supaUrl = "https://jrtfaqqpnggqbdwkgytj.supabase.co"
+export const anonKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImpydGZhcXFwbmdncWJkd2tneXRqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzQ5OTQyNjUsImV4cCI6MjA1MDU3MDI2NX0.dGwdt5E_Eqc3Lq4JgC0Df3tbuqyvcqQtUaVUbLuo9nI"

@@ -1,9 +1,10 @@
 import colors from "@/constants/colors"
 import Colors from "@/constants/colors"
-import { View, Text, StyleSheet, TextInput, TouchableOpacity, SafeAreaView, ScrollView } from "react-native"
+import { View, Text, StyleSheet, TextInput, TouchableOpacity, SafeAreaView, ScrollView, Alert } from "react-native"
 import { router } from "expo-router"
 import { Ionicons } from "@expo/vector-icons"
 import { useState } from "react"
+import { supabase } from "../../lib/supabase"
 
 export default function SignUp() {
 
@@ -12,80 +13,94 @@ export default function SignUp() {
     const [password, setPassword] = useState('')
     const [loading, setLoading] = useState(false)
 
-    function handleSignUp(){
-        console.log({
-            name, email, password
+    async function handleSignUp() {
+        setLoading(true)
+        const { data, error } = await supabase.auth.signUp({
+            email: email,
+            password: password,
+            options: {
+                data: {
+                    name: name
+                }
+            }
         })
+        if (error) {
+            Alert.alert("Error", error.message)
+            setLoading(false)
+            return
+        }
+        setLoading(false)
+        router.replace("/")
     }
 
     return (
-        <SafeAreaView style={{flex: 1}}>
-            <ScrollView style={{flex:1, backgroundColor: colors.white}}>
-        <View style={styles.container}>
+        <SafeAreaView style={{ flex: 1 }}>
+            <ScrollView style={{ flex: 1, backgroundColor: colors.white }}>
+                <View style={styles.container}>
 
-            <View style={styles.header}>
+                    <View style={styles.header}>
 
-                <TouchableOpacity style={styles.backButton} 
-                onPress={() =>router.back()}
-                >
-                    <Ionicons
-                        name="arrow-back" size={24} color={colors.white}
-                    />
-                </TouchableOpacity>
+                        <TouchableOpacity style={styles.backButton}
+                            onPress={() => router.back()}
+                        >
+                            <Ionicons
+                                name="arrow-back" size={24} color={colors.white}
+                            />
+                        </TouchableOpacity>
 
-                <Text style={styles.logoText}>Dev
-                    <Text style={{ color: Colors.green }}>App</Text>
-                </Text>
-                <Text style={styles.slogan}>
-                    Criar uma Conta
-                </Text>
-            </View>
+                        <Text style={styles.logoText}>Dev
+                            <Text style={{ color: Colors.green }}>App</Text>
+                        </Text>
+                        <Text style={styles.slogan}>
+                            Criar uma Conta
+                        </Text>
+                    </View>
 
-            <View style={styles.form}>
+                    <View style={styles.form}>
 
-                <View>
-                    <Text style={styles.label}>Nome Completo</Text>
-                    <TextInput
-                        placeholder="Digite seu nome completo..."
-                        style={styles.input}
-                        value={name}
-                        onChangeText={setName}
-                    />
+                        <View>
+                            <Text style={styles.label}>Nome Completo</Text>
+                            <TextInput
+                                placeholder="Digite seu nome completo..."
+                                style={styles.input}
+                                value={name}
+                                onChangeText={setName}
+                            />
+
+                        </View>
+
+                        <View>
+                            <Text style={styles.label}>Email</Text>
+                            <TextInput
+                                placeholder="Digite seu email..."
+                                style={styles.input}
+                                value={email}
+                                onChangeText={setEmail}
+                            />
+
+                        </View>
+
+
+                        <View>
+                            <Text style={styles.label}>Senha</Text>
+                            <TextInput
+                                placeholder="Digite sua senha..."
+                                style={styles.input}
+                                secureTextEntry
+                                value={password}
+                                onChangeText={setPassword}
+                            />
+
+                        </View>
+
+                        <TouchableOpacity style={styles.button} onPress={handleSignUp}>
+                            <Text style={styles.buttonText}>Cadastrar</Text>
+                        </TouchableOpacity>
+
+                    </View>
 
                 </View>
-
-                <View>
-                    <Text style={styles.label}>Email</Text>
-                    <TextInput
-                        placeholder="Digite seu email..."
-                        style={styles.input}
-                        value={email}
-                        onChangeText={setEmail}
-                    />
-
-                </View>
-
-
-                <View>
-                    <Text style={styles.label}>Senha</Text>
-                    <TextInput
-                        placeholder="Digite sua senha..."
-                        style={styles.input}
-                        secureTextEntry
-                        value={password}
-                        onChangeText={setPassword}
-                    />
-
-                </View>
-
-                <TouchableOpacity style={styles.button} onPress={handleSignUp}>
-                    <Text style={styles.buttonText}>Cadastrar</Text>
-                </TouchableOpacity>
-
-            </View>
-
-        </View>
-        </ScrollView>
+            </ScrollView>
         </SafeAreaView>
     )
 }
@@ -122,7 +137,7 @@ const styles = StyleSheet.create({
     label: {
         color: colors.zinc,
         marginBottom: 4,
-        
+
     },
     input: {
         borderWidth: 1,
@@ -145,7 +160,7 @@ const styles = StyleSheet.create({
         fontWeight: "bold",
     },
     backButton: {
-        backgroundColor:" rgba(255, 255, 255, 0.55)",
+        backgroundColor: " rgba(255, 255, 255, 0.55)",
         alignSelf: "flex-start",
         padding: 8,
         borderRadius: 8,
