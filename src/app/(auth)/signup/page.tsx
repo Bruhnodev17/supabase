@@ -1,22 +1,41 @@
 import colors from "@/constants/colors"
 import Colors from "@/constants/colors"
 import { View, Text, StyleSheet, TextInput, TouchableOpacity, } from "react-native"
-import { Link } from "expo-router"
+import { router } from "expo-router"
+import { Ionicons } from "@expo/vector-icons"
 
-export default function Login() {
+export default function SignUp() {
     return (
         <View style={styles.container}>
 
             <View style={styles.header}>
+
+                <TouchableOpacity style={styles.backButton} 
+                onPress={() =>router.back()}
+                >
+                    <Ionicons
+                        name="arrow-back" size={24} color={colors.white}
+                    />
+                </TouchableOpacity>
+
                 <Text style={styles.logoText}>Dev
                     <Text style={{ color: Colors.green }}>App</Text>
                 </Text>
                 <Text style={styles.slogan}>
-                    Authenticator
+                    Criar uma Conta
                 </Text>
             </View>
 
             <View style={styles.form}>
+
+                <View>
+                    <Text style={styles.label}>Nome Completo</Text>
+                    <TextInput
+                        placeholder="Digite seu nome completo..."
+                        style={styles.input}
+                    />
+
+                </View>
 
                 <View>
                     <Text style={styles.label}>Email</Text>
@@ -39,12 +58,8 @@ export default function Login() {
                 </View>
 
                 <TouchableOpacity style={styles.button}>
-                    <Text style={styles.buttonText}>Acessar</Text>
+                    <Text style={styles.buttonText}>Cadastrar</Text>
                 </TouchableOpacity>
-
-                <Link href="/(auth)/signup/page" style={styles.link}>
-                    <Text>Ainda não possui uma conta? Cadastre-se gratuitamente!</Text>
-                </Link>
 
             </View>
 
@@ -92,7 +107,7 @@ const styles = StyleSheet.create({
         marginBottom: 16,
         padding: 12,
     },
-    button:{
+    button: {
         backgroundColor: colors.green,
         paddingTop: 14,
         paddingBottom: 14,
@@ -101,14 +116,15 @@ const styles = StyleSheet.create({
         width: "100%",
         borderRadius: 10,
     },
-    buttonText:{
+    buttonText: {
         color: "#000",
         fontWeight: "bold",
     },
-    link:{
-        fontSize: 12.5,
-        marginTop: 16,
-        textAlign: "center",
-        fontWeight: "bold" ,
-    },
+    backButton: {
+        backgroundColor:" rgba(255, 255, 255, 0.55)",
+        alignSelf: "flex-start",
+        padding: 8,
+        borderRadius: 8,
+        marginBottom: 10,
+    }
 })
