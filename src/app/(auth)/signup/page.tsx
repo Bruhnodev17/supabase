@@ -1,11 +1,26 @@
 import colors from "@/constants/colors"
 import Colors from "@/constants/colors"
-import { View, Text, StyleSheet, TextInput, TouchableOpacity, } from "react-native"
+import { View, Text, StyleSheet, TextInput, TouchableOpacity, SafeAreaView, ScrollView } from "react-native"
 import { router } from "expo-router"
 import { Ionicons } from "@expo/vector-icons"
+import { useState } from "react"
 
 export default function SignUp() {
+
+    const [name, setName] = useState('')
+    const [email, setEmail] = useState('')
+    const [password, setPassword] = useState('')
+    const [loading, setLoading] = useState(false)
+
+    function handleSignUp(){
+        console.log({
+            name, email, password
+        })
+    }
+
     return (
+        <SafeAreaView style={{flex: 1}}>
+            <ScrollView style={{flex:1, backgroundColor: colors.white}}>
         <View style={styles.container}>
 
             <View style={styles.header}>
@@ -33,6 +48,8 @@ export default function SignUp() {
                     <TextInput
                         placeholder="Digite seu nome completo..."
                         style={styles.input}
+                        value={name}
+                        onChangeText={setName}
                     />
 
                 </View>
@@ -42,6 +59,8 @@ export default function SignUp() {
                     <TextInput
                         placeholder="Digite seu email..."
                         style={styles.input}
+                        value={email}
+                        onChangeText={setEmail}
                     />
 
                 </View>
@@ -53,17 +72,21 @@ export default function SignUp() {
                         placeholder="Digite sua senha..."
                         style={styles.input}
                         secureTextEntry
+                        value={password}
+                        onChangeText={setPassword}
                     />
 
                 </View>
 
-                <TouchableOpacity style={styles.button}>
+                <TouchableOpacity style={styles.button} onPress={handleSignUp}>
                     <Text style={styles.buttonText}>Cadastrar</Text>
                 </TouchableOpacity>
 
             </View>
 
         </View>
+        </ScrollView>
+        </SafeAreaView>
     )
 }
 const styles = StyleSheet.create({
@@ -99,6 +122,7 @@ const styles = StyleSheet.create({
     label: {
         color: colors.zinc,
         marginBottom: 4,
+        
     },
     input: {
         borderWidth: 1,

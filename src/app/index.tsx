@@ -2,8 +2,20 @@ import colors from "@/constants/colors"
 import Colors from "@/constants/colors"
 import { View, Text, StyleSheet, TextInput, TouchableOpacity, } from "react-native"
 import { Link } from "expo-router"
+import { useState } from "react"
 
 export default function Login() {
+
+    const [email, setEmail] = useState('')
+    const [password, setPassword] = useState('')
+    const [loading, setLoading] = useState(false)
+
+    function handleSigIn(){
+        console.log({
+            email, password
+        })
+    }
+    
     return (
         <View style={styles.container}>
 
@@ -23,6 +35,8 @@ export default function Login() {
                     <TextInput
                         placeholder="Digite seu email..."
                         style={styles.input}
+                        value={email}
+                        onChangeText={setEmail}
                     />
 
                 </View>
@@ -34,11 +48,13 @@ export default function Login() {
                         placeholder="Digite sua senha..."
                         style={styles.input}
                         secureTextEntry
+                        value={password}
+                        onChangeText={setPassword}
                     />
 
                 </View>
 
-                <TouchableOpacity style={styles.button}>
+                <TouchableOpacity style={styles.button} onPress={handleSigIn}>
                     <Text style={styles.buttonText}>Acessar</Text>
                 </TouchableOpacity>
 
@@ -92,7 +108,7 @@ const styles = StyleSheet.create({
         marginBottom: 16,
         padding: 12,
     },
-    button:{
+    button: {
         backgroundColor: colors.green,
         paddingTop: 14,
         paddingBottom: 14,
@@ -101,14 +117,14 @@ const styles = StyleSheet.create({
         width: "100%",
         borderRadius: 10,
     },
-    buttonText:{
+    buttonText: {
         color: "#000",
         fontWeight: "bold",
     },
-    link:{
+    link: {
         fontSize: 12.5,
         marginTop: 16,
         textAlign: "center",
-        fontWeight: "bold" ,
+        fontWeight: "bold",
     },
 })
