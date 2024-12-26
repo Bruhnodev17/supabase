@@ -30,7 +30,7 @@ export default function SignUp() {
             return
         }
         setLoading(false)
-        router.replace("/")
+        router.replace("/(auth)/signIn/page")
     }
 
     return (
