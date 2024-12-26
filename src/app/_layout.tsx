@@ -1,7 +1,24 @@
 import { Stack } from "expo-router";
+import { AuthProvider, useAuth } from "../contexts/AuthContext";
+import { useEffect } from "react";
+import { supabase } from "./lib/supabase";
 
+export default function RootLayout(){
+  return(
+    <AuthProvider>
+      <MainLayout />
+    </AuthProvider>
+  )
+}
 
-export default function MainLayout() {
+ function MainLayout() {
+
+  const {setAuth} = useAuth()
+  useEffect(() => {
+    supabase.auth.onAuthStateChange((_event, session) => {
+      console.log("session user", session?.user)
+    })
+  },[])
   return (
     <Stack>
 
